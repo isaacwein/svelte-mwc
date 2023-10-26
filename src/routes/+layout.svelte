@@ -1,7 +1,10 @@
 <script>
+
+
+
     import '@material/web/all.js';
-    import Header from './Header.svelte';
     import './styles.css';
+    import Header from './Header.svelte';
 
 
 </script>

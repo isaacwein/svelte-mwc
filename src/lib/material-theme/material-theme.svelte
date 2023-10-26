@@ -29,8 +29,7 @@
     const redDark = "/material-theme/red/theme.dark.css"; // (prefers-color-scheme: dark);
 
 
-    interface ThemeFiles {
-        tokens: string;
+    interface ThemeFiles {        tokens: string;
         colorsModule: string;
         typography: string;
         light: string;

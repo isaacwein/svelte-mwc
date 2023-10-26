@@ -3,11 +3,11 @@
     <meta name="description" content="Svelte demo app"/>
 </svelte:head>
 
-<MaterialTheme theme={selectedTheme} colorScheme={selectedSchema}/>
+<!--<MaterialTheme theme={selectedTheme} colorScheme={selectedSchema}/>-->
 
 
 <div class="wrapper background background-text">
-    <div class="box theme-picker">
+    <div class="box surface theme-picker">
         <md-slider class="color-picker" labeled min="0" max="255" value="50"></md-slider>
         <div class="color-display-wrapper">
             <div id="gradient" class="color-display"></div>
@@ -25,7 +25,7 @@
     <div class="box surface surface-text">
         <a class="surface-text" href="/test/MWC">MWC</a> Some words
     </div>
-    <div class="box progressers">
+    <div class="box surface progressers">
         <div class="">
             <md-circular-progress four-color indeterminate></md-circular-progress>
         </div>
@@ -43,34 +43,44 @@
     </div>
     <div class="box team-box surface surface-text">
         <!-- value="" just for Initialization -->
-        <md-filled-select value="" on:change={teamSelectChanged} required>
-            <md-select-option value="" selected>
-                <div slot="headline">Default</div>
-            </md-select-option>
-            <md-select-option value="blue">
+        <md-filled-select value="blue" on:change={teamSelectChanged} required>
+            <md-select-option value="blue" selected>
                 <div slot="headline">Blue</div>
             </md-select-option>
             <md-select-option value="purple">
                 <div slot="headline">Purple</div>
             </md-select-option>
             <md-select-option value="red">
-                <div slot="headline">red</div>
+                <div slot="headline">Red</div>
+            </md-select-option>
+            <md-select-option value="pink">
+                <div slot="headline">Pink</div>
+            </md-select-option>
+            <md-select-option value="deep-blue">
+                <div slot="headline">Deep blue</div>
+            </md-select-option>
+            <md-select-option value="yellow">
+                <div slot="headline">Yellow</div>
+            </md-select-option>
+            <md-select-option value="green">
+                <div slot="headline">Green</div>
             </md-select-option>
         </md-filled-select>
     </div>
 
-    <div class="box team-box">
+    <div class="box surface team-box">
         <!-- value="" just for Initialization -->
-        <md-filled-select desabled value="" on:change={schemaSelectChanged} required>
-            <md-select-option value="" selected>
+        <md-filled-select desabled value="light" on:change={schemaSelectChanged} required>
+            <md-select-option value="">
                 <div slot="headline">Default</div>
+            </md-select-option>
+            <md-select-option value="light" selected>
+                <div slot="headline">Light</div>
             </md-select-option>
             <md-select-option value="dark">
                 <div slot="headline">Dark</div>
             </md-select-option>
-            <md-select-option value="light">
-                <div slot="headline">Light</div>
-            </md-select-option>
+
         </md-filled-select>
     </div>
     <div class="box">
@@ -89,26 +99,44 @@
 
     <div class="box">
         Dialog
-        <md-outlined-button on:click={() => {
-myDialog.show()
-        }}>Open
-        </md-outlined-button>
+        <md-outlined-button on:click={myDialog.show()}>Open</md-outlined-button>
 
+        <md-dialog bind:this={myDialog}>
+            <div slot="headline">
+                Dialog title
+            </div>
+            <form slot="content" bind:this={formId} on:submit|preventDefault={myDialog.close()}>
+                A simple dialog with free-form content.
+            </form>
+            <div slot="actions">
+                <md-text-button on:click={formId.requestSubmit()}>Ok</md-text-button>
+            </div>
+        </md-dialog>
+    </div>
+    <div class="box display-boxes">
+        {#each baseClasses1 as baseClass}
+            <div class="display-box-wrapper on-{baseClass}">
+                <div class="display-box-inner {baseClass}">
+                    <p class="inner on-{baseClass}-text">{baseClass} Text</p>
+                </div>
+            </div>
+            <div class="display-box-wrapper {baseClass}">
+                <div class="display-box-inner on-{baseClass}">
+                    <p class="{baseClass}-text">On {baseClass} Text</p>
+                </div>
+            </div>
+        {/each}
 
+        {#each baseClasses2 as baseClass}
+            <div class="display-box-wrapper on-{baseClass}">
+                <div class="display-box-inner {baseClass}">
+                    <p class="inner on-{baseClass}-text">{baseClass} Text</p>
+                </div>
+            </div>
+        {/each}
     </div>
 </div>
 
-<md-dialog bind:this={myDialog}>
-    <div slot="headline">
-        Dialog title
-    </div>
-    <form slot="content" bind:this={formId} on:submit|preventDefault={myDialog.close()}>
-        A simple dialog with free-form content.
-    </form>
-    <div slot="actions">
-        <md-text-button on:click={formId.requestSubmit()}>Ok</md-text-button>
-    </div>
-</md-dialog>
 
 <style lang="scss">
   .wrapper {
@@ -117,7 +145,7 @@ myDialog.show()
       padding: 36px;
       width: 100%;
       height: 100%;
-      border: solid 2px #fff;
+      border: solid 2px var(--md-sys-color-on-background);
     }
 
     display: grid;
@@ -196,6 +224,32 @@ myDialog.show()
       }
     }
 
+    .display-boxes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: .25em;
+
+      .display-box-wrapper {
+        border: solid 1px var(--md-sys-color-on-background);
+        border-radius: 14px;
+        max-width: 200px;
+        padding: 3px;
+
+
+        .display-box-inner {
+          border-radius: 10px;
+          padding: 15px;
+          height: 120px;
+          display: grid;
+          justify-items: center;
+          align-items: center;
+          text-align: center;
+        }
+
+
+      }
+    }
+
     .nav {
 
       padding: 15px;
@@ -219,8 +273,9 @@ myDialog.show()
         i--
     }
 
-    let selectedTheme: Themes = ""
-    let selectedSchema: Scheme = ""
+    let selectedTheme: Themes = "blue"
+    let selectedSchema: Scheme = "light"
+    apply(selectedTheme, selectedSchema)
     const teamSelectChanged = (e: Event) => {
 
         selectedTheme = (e.target as MdOutlinedSelect)?.value as Themes
@@ -237,4 +292,27 @@ myDialog.show()
 
     let formId: HTMLFormElement;
     let myDialog: MdDialog;
+
+
+    const baseClasses1 = [
+        'primary',
+        'primary-container',
+        'secondary',
+        'secondary-container',
+        'tertiary',
+        'tertiary-container',
+        'error',
+        'error-container']
+    const baseClasses2 = [
+        'background',
+        'surface',
+        'outline',
+        'inverse-on-surface',
+        'inverse-surface',
+        'inverse-primary',
+        'shadow',
+        'surface-tint',
+        'outline-variant',
+        'scrim'
+    ];
 </script>

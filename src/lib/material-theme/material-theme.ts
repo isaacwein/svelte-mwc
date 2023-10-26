@@ -1,4 +1,4 @@
-import {Hct,argbFromHex, themeFromSourceColor, applyTheme, type Theme} from "@material/material-color-utilities";
+import {Hct, argbFromHex, themeFromSourceColor, applyTheme, type Theme} from "@material/material-color-utilities";
 
 
 // Simple demonstration of HCT.
@@ -17,19 +17,48 @@ const themeList: { [key: string]: Theme } = {
         },
     ]),
 
-    blue: themeFromSourceColor(argbFromHex('#5ecad4'), [
+    blue: themeFromSourceColor(argbFromHex('#96b5ff'), [
         {
             name: "blue",
-            value: argbFromHex("#5ecad4"),
+            value: argbFromHex("#96b5ff"),
+            blend: true,
+
+        },
+    ]), deepBlue: themeFromSourceColor(argbFromHex('#00629f'), [
+        {
+            name: "blue",
+            value: argbFromHex("#00629f"),
+            blend: true,
+
+        },
+    ]),
+    green: themeFromSourceColor(argbFromHex('#006d38'), [
+        {
+            name: "green",
+            value: argbFromHex("#006d38"),
+            blend: true,
+
+        },
+    ]),
+    pink: themeFromSourceColor(argbFromHex('#ac0078'), [
+        {
+            name: "pink",
+            value: argbFromHex("#ac0078"),
             blend: true,
 
         },
     ]),
 
-    purple: themeFromSourceColor(argbFromHex('#d45ec0'), [
+    purple: themeFromSourceColor(argbFromHex('#9700dd'), [
         {
             name: "purple",
-            value: argbFromHex("#d45ec0"),
+            value: argbFromHex("#9700dd"),
+            blend: true,
+        },
+    ]), yellow: themeFromSourceColor(argbFromHex('#795a00'), [
+        {
+            name: "yellow",
+            value: argbFromHex("#795a00"),
             blend: true,
         },
     ])
@@ -42,10 +71,10 @@ const themeList: { [key: string]: Theme } = {
 // Check if the user has dark mode turned on
 const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-export type Themes = '' | 'red' | 'blue' | 'purple';
+export type Themes = '' | 'red' | 'blue' | 'purple' | 'green' | 'pink' | 'yellow' | 'deepBlue';
 export type Scheme = '' | 'light' | 'dark';
 // Apply the theme to the body by updating custom properties for material tokens
-export const apply= (theme: Themes, schema: Scheme) => {
+export const apply = (theme: Themes, schema: Scheme) => {
     if (theme === '') {
         document.body.setAttribute('style', '');
 
