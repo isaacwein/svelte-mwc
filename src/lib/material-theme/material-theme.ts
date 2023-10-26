@@ -1,5 +1,11 @@
-import {argbFromHex, themeFromSourceColor, applyTheme, type Theme} from "@material/material-color-utilities";
+import {Hct,argbFromHex, themeFromSourceColor, applyTheme, type Theme} from "@material/material-color-utilities";
 
+
+// Simple demonstration of HCT.
+const color = Hct.fromInt(0xff4285f4);
+console.log(`Hue: ${color.hue}`);
+console.log(`Chrome: ${color.chroma}`);
+console.log(`Tone: ${color.tone}`);
 // Get the theme from a hex color
 const themeList: { [key: string]: Theme } = {
     red: themeFromSourceColor(argbFromHex('#d45e5e'), [
